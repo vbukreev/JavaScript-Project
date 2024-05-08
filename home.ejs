@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Anta&family=Bebas+Neue&family=Cinzel:wght@400..900&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Fredericka+the+Great&family=Montserrat+Subrayada:wght@400;700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Press+Start+2P&family=Quicksand:wght@300..700&family=Rajdhani:wght@300;400;500;600;700&family=Rock+3D&family=Syncopate:wght@400;700&family=Tenor+Sans&family=Yanone+Kaffeesatz:wght@200..700&family=Zeyada&display=swap" rel="stylesheet">
+  <style>
+
+    body {
+        font-family: "Open Sans", sans-serif;
+    }
+    .taskContainer {
+        display: flex;
+        align-items: center;
+        justify-content:space-between;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+    }
+    
+    .completed-task {
+      text-decoration: line-through;
+    }
+   
+    form {
+      margin-top: 10px;
+    }
+  </style>
+
+</head>
+<body>
+
+    <h1>To-Do List</h1>
+    <a href="/">All Tasks</a> | <a href="/completed-tasks">Completed Tasks</a>
+    
+    <% if (tasks.length===0) { %>
+        <p>No tasks found.</p>
+        <% } else { %>
+            <% for(let i=0; i < tasks.length; i++) { %>
+                <div class="taskContainer">
+                    <span>
+                        <%= tasks[i].id %>
+                    </span>
+                    <span class="<%= tasks[i].isComplete ? 'completed-task' : '' %>">
+                        <%= tasks[i].name %>
+                    </span>
+
+                    <form method="POST" action="/update-task/<%= tasks[i].id %>">
+                        <input type="checkbox" name="isComplete" <%=tasks[i].isComplete ? 'checked' : '' %> />
+                        <button>Update</button>
+                    </form>
+
+                </div>
+                <% } %>
+                    <% } %>
+
+                        <h2>Add Task</h2>
+                        <form method="POST" action="/add-task">
+                            <label>Task Name: </label>
+                            <input type="text" name="name" required />
+                            <button>Add</button>
+                        </form>
+</body>
+</html>
